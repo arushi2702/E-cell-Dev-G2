@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding-top: 20px;
+    /* Added padding for spacing */
+}
+
+.slideshow {
+    width: 50%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.slideshow img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    opacity: 0;
+    animation: slide 12s infinite;
+    transition: opacity 1s ease-in-out;
+}
+
+.slideshow img.active {
+    opacity: 1;
+}
+
+.slideshow .controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.slideshow .controls button {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    pointer-events: all;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.boxx {
+    width: 50%;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.boxx h1,.boxx p,.boxx ul {
+    margin: 0 0 10px 0;
+}
+
+.boxx ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="slideshow" id="slideshow">
+
+            <img src="https://miro.medium.com/v2/resize:fit:828/format:webp/0*28mFvZ1uBVNy6V21" alt="Enspire" class="active">
+            <img src="https://miro.medium.com/v2/resize:fit:828/format:webp/0*gnMP14rOOkarPOXb" alt="Image 1">
+            <img src="https://miro.medium.com/v2/resize:fit:828/format:webp/0*JfC9V_NsL7N1wGgW" alt="Image 2">
+            <img src="https://miro.medium.com/v2/resize:fit:828/format:webp/0*Cs1Kv_ir9D5wiGzG" alt="Image 3">
+
+                <div class="controls">
+                    <button id="prev"><</button>
+                    <button id="next">></button>
+                </div>
+        </div>
+
+        <div class="boxx">
+            <br><br>
+            <h1>Past Events</h1>
+            <br>
+            <p>The Entrepreneurship Cell (E-Cell) of IIIT Lucknow supports budding entrepreneurs with mentorship, consultancy, and networking opportunities. With a vision to transform ideas into impactful innovations, we bridge the gap between students, entrepreneurs, and investors.</p>
+            <h3>Events that were a part of our flagship event ENspire ~</h3>
+            <ul>
+                <li><b>Monopoly:</b> Inspired by the classic board game, this event encouraged participants to strategize, negotiate, and trade to dominate the market.</li>
+                <li><b>Mystery Room: </b>A real-life escape room scenario where participants solved puzzles and clues under a time constraint to achieve a specific goal.</li>
+                <li><b>IPL Auction:</b> A simulation of the IPL (Indian Premier League) auction, where participants acted as team owners, bidding for players within a budget and forming competitive teams.</li>
+                <li><b>Ad Arena:</b> A competition that tested creativity and marketing skills by challenging participants to create and pitch innovative advertisements for fictional or real products.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let slideIndex = 0;
+        let slides = document.querySelectorAll(".slideshow img");
+        let interval;
+
+        function showSlides(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove("active");
+                if (i === index) {
+                    slide.classList.add("active");
+                }
+            });
+        }
+
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % slides.length;
+            showSlides(slideIndex);
+        }
+
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+            showSlides(slideIndex);
+        }
+
+        function startSlideshow() {
+            interval = setInterval(nextSlide, 3000);
+        }
+
+        function stopSlideshow() {
+            clearInterval(interval);
+        }
+
+        document.getElementById("next").addEventListener("click", () => {
+            stopSlideshow();
+            nextSlide();
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+            stopSlideshow();
+            prevSlide();
+        });
+
+        const slideshowElement = document.getElementById("slideshow");
+        slideshowElement.addEventListener("mouseover", stopSlideshow);
+        slideshowElement.addEventListener("mouseout", () => {
+            startSlideshow();
+        });
+
+        startSlideshow();      
+    </script>
+</body>
+</html>
